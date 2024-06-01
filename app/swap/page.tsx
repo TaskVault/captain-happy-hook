@@ -23,13 +23,29 @@ export default function Home() {
 
   const swap = () => {
     return true;
-    // TODO
-    // writeContract({
-    //   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    //   abi,
-    //   functionName: 'mint',
-    //   args: [BigInt(tokenId)],
-    // })
+    writeContract({
+       address: '0x841B5A0b3DBc473c8A057E2391014aa4C4751351',
+       abi: [{"inputs":[{"internalType":"contract IPoolManager","name":"_manager","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"NoSwapOccurred","type":"error"},{"inputs":[],"name":"manager","outputs":[{"internalType":"contract IPoolManager","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"components":[{"internalType":"Currency","name":"currency0","type":"address"},{"internalType":"Currency","name":"currency1","type":"address"},{"internalType":"uint24","name":"fee","type":"uint24"},{"internalType":"int24","name":"tickSpacing","type":"int24"},{"internalType":"contract IHooks","name":"hooks","type":"address"}],"internalType":"struct PoolKey","name":"key","type":"tuple"},{"components":[{"internalType":"bool","name":"zeroForOne","type":"bool"},{"internalType":"int256","name":"amountSpecified","type":"int256"},{"internalType":"uint160","name":"sqrtPriceLimitX96","type":"uint160"}],"internalType":"struct IPoolManager.SwapParams","name":"params","type":"tuple"},{"components":[{"internalType":"bool","name":"takeClaims","type":"bool"},{"internalType":"bool","name":"settleUsingBurn","type":"bool"}],"internalType":"struct PoolSwapTest.TestSettings","name":"testSettings","type":"tuple"},{"internalType":"bytes","name":"hookData","type":"bytes"}],"name":"swap","outputs":[{"internalType":"BalanceDelta","name":"delta","type":"int256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"bytes","name":"rawData","type":"bytes"}],"name":"unlockCallback","outputs":[{"internalType":"bytes","name":"","type":"bytes"}],"stateMutability":"nonpayable","type":"function"}],
+       functionName: 'swap',
+       args: [
+  BigInt("1000000000000000000"), // 1 ether in Wei
+  ["0x123456789ABCDEF123456789ABCDEF1234567890", 42], // Tuple example: [address, uint]
+  "0x123456789ABCDEF123456789ABCDEF1234567890", // currency0 address
+  "0x0987654321FEDCBA0987654321FEDCBA09876543", // currency1 address
+  500, // fee as a uint24
+  -10, // tickSpacing as int24
+  "0xABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE", // hooks address
+  [true, BigInt("500000000000000000"), ["0xABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE", 100]], // params tuple: [bool, uint256, [address, uint]]
+  true, // zeroForOne as bool
+  BigInt("-1000000000000000000"), // amountSpecified as int256
+  BigInt("489366168637213703093760231"), // sqrtPriceLimitX96 as uint160
+  [false, "Extra data"], // testSettings tuple: [bool, string]
+  true, // takeClaims as bool
+  false, // settleUsingBurn as bool
+  "0x68656c6c6f20776f726c64" // hookData in bytes (hex for "hello world")
+];
+,
+     })
   };
 
   return (
