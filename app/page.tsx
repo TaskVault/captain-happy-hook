@@ -6,9 +6,15 @@ export default function Home() {
   const [crypto1, setCrypto1] = useState("ETH");
   const [crypto2, setCrypto2] = useState("OTHER");
 
-  const swap = () => {
+  const [amount1, setAmount1] = useState("");
+  const [amount2, setAmount2] = useState("");
+
+  const switch12 = () => {
     const temp = crypto1;
+    const tempAmount = amount1;
+    setAmount1(amount2);
     setCrypto1(crypto2);
+    setAmount2(tempAmount);
     setCrypto2(temp);
   };
 
@@ -21,14 +27,16 @@ export default function Home() {
           <div className="flex flex-row w-full space-x-14 py-8">
             <input
               className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"
-              type="text"
+              type="number"
               placeholder="Amount"
+              value={amount1}
+              onChange={(e) => setAmount1(e.target.value)}
             />
             <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto1}</div>
           </div>
         </div>
         <div className="flex-1 bg-gray-700 rounded-xl">
-          <button className="relative z-50 btn btn-neutral" onClick={swap}>
+          <button className="relative z-50 btn btn-neutral" onClick={switch12}>
             <Image width={20} height={20} src="https://www.svgrepo.com/show/119597/up-and-down-arrows.svg" alt="Swap" />
           </button>
         </div>
@@ -37,8 +45,10 @@ export default function Home() {
           <div className="flex flex-row w-full space-x-14 py-8">
             <input
               className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"
-              type="text"
+              type="number"
               placeholder="Amount"
+              value={amount2}
+              onChange={(e) => setAmount2(e.target.value)}
             />
             <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto2}</div>
           </div>
