@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { useWriteContract } from "wagmi";
+import { useWriteContract, useAccount } from "wagmi";
 
 export default function Home() {
+  const { isConnecting, isDisconnected } = useAccount();
   const { writeContract } = useWriteContract();
 
   const [crypto1, setCrypto1] = useState("ETH");
@@ -51,10 +52,18 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center ">
-      <h2 className="text-6xl font-bold text-center my-16">Try swapping with our new hook</h2>
-      <div className="bg-gray-900 p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center">
-        <div className="flex flex-col w-full bg-gray-700 rounded-2xl p-4 -mb-5">
+    <main
+      className="flex min-h-screen flex-col items-center"
+      style={{
+        backgroundImage: `url(/background.png)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <h2 className="text-6xl font-bold text-center my-16 text-custom-blue">Fairly Distributed Swaps</h2>
+      <div className="bg-custom-blue p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center">
+        <div className="flex flex-col w-full bg-custom-light-blue rounded-2xl p-4 -mb-5">
           Sell
           <div className="flex flex-row w-full space-x-14 py-8">
             <input
@@ -67,12 +76,12 @@ export default function Home() {
             <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto1}</div>
           </div>
         </div>
-        <div className="flex-1 bg-gray-700 rounded-xl">
-          <button className="relative z-50 btn btn-neutral" onClick={switch12}>
-            <Image width={20} height={20} src="https://www.svgrepo.com/show/119597/up-and-down-arrows.svg" alt="Swap" />
+        <div className="flex-1 rounded-xl">
+          <button className="relative z-50 btn bg-custom-blue" onClick={switch12}>
+            <Image width={20} height={20} src="/arrows.png" alt="Swap" />
           </button>
         </div>
-        <div className="flex flex-col w-full bg-gray-700 rounded-2xl p-4 -mt-5">
+        <div className="flex flex-col w-full bg-custom-light-blue rounded-2xl p-4 -mt-5">
           Buy
           <div className="flex flex-row w-full space-x-14 py-8">
             <input
@@ -85,12 +94,21 @@ export default function Home() {
             <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto2}</div>
           </div>
         </div>
-        <button
-          onClick={swap}
-          className="flex w-full bg-pink-600 hover:bg-pink-700 rounded-2xl justify-center items-center text-xl p-4 mt-2"
-        >
-          Swap
-        </button>
+        {isConnecting || isDisconnected ? (
+          <button
+            onClick={swap}
+            className="flex w-full bg-slate-600 rounded-2xl justify-center items-center text-xl p-4 mt-2"
+          >
+            Swap
+          </button>
+        ) : (
+          <button
+            onClick={swap}
+            className="flex w-full bg-pink-600 hover:bg-pink-700 rounded-2xl justify-center items-center text-xl p-4 mt-2"
+          >
+            Swap
+          </button>
+        )}
       </div>
     </main>
   );

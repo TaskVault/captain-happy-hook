@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const AddLiquidityBox = () => {
   return (
-    <div className="bg-gray-900 p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center">
+    <div className="bg-custom-blue p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center">
       Add liquidity to ETH/OTHER pool
-      <div className="flex flex-col w-full bg-gray-700 rounded-2xl p-4 mt-3">
+      <div className="flex flex-col w-full bg-custom-light-blue rounded-2xl p-4 mt-3">
         <div className="flex flex-row w-full space-x-14 py-8">
           <input
             className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"
@@ -18,7 +18,7 @@ const AddLiquidityBox = () => {
           <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{"ETH"}</div>
         </div>
       </div>
-      <div className="flex flex-col w-full bg-gray-700 rounded-2xl p-4 mt-2">
+      <div className="flex flex-col w-full bg-custom-light-blue rounded-2xl p-4 mt-2">
         <div className="flex flex-row w-full space-x-14 py-8">
           <input
             className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"

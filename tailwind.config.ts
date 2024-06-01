@@ -9,6 +9,10 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        "custom-blue": "#112647",
+        "custom-light-blue": "#4A6CBE",
+      },
     },
   },
   plugins: [daisyui],

@@ -3,10 +3,11 @@
 import React from "react";
 import { ConnectKitButton } from "connectkit";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-opacity-95 bg-custom-blue">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -22,24 +23,32 @@ const Navbar = () => {
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
-              <Link href="/swap">Swap</Link>
+              <Link href="/swap" className="text-xl">
+                Swap
+              </Link>
             </li>
             <li>
-              <Link href="/liquidity">Manage liquidity</Link>
+              <Link href="/liquidity" className="text-xl">
+                Manage liquidity
+              </Link>
             </li>
           </ul>
         </div>
-        <Link href="/">
-          <div className="btn btn-ghost text-xl">Unicorn V4</div>
+        <Link href="/about">
+          <div className="btn btn-ghost text-2xl">Captain Happy Hook</div>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href="/swap">Swap</Link>
+            <Link href="/swap" className="text-xl mx-1">
+              Swap
+            </Link>
           </li>
           <li>
-            <Link href="/liquidity">Manage liquidity</Link>
+            <Link href="/liquidity" className="text-xl mx-1">
+              Manage liquidity
+            </Link>
           </li>
         </ul>
       </div>

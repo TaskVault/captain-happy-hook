@@ -7,8 +7,16 @@ export default function Home() {
   const [action, setAction] = useState("Add");
 
   return (
-    <main className="flex min-h-screen flex-col items-center ">
-      <h2 className="text-6xl font-bold text-center mt-16 mb-12">Manage your liquidity</h2>
+    <main
+      className="flex min-h-screen flex-col items-center"
+      style={{
+        backgroundImage: `url(/background.png)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <h2 className="text-6xl font-bold text-custom-blue mt-16 mb-12">Manage your liquidity</h2>
       <div className="flex flex-row space-x-10 mb-4">
         <button onClick={(e) => setAction("Add")} className="btn btn-neutral rounded-full">
           Add Liquidity
