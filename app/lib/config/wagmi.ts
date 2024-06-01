@@ -7,12 +7,12 @@ export const config = createConfig(
     // Your dApps chains
     chains: [sepolia],
     transports: {
-      // RPC URL for each chain
-      [sepolia.id]: http(`https://eth-sepolia.g.alchemy.com/v2/ylk_Y5anNEklitAdT1wEiZtow6mG05Bq`),
+      // RPC URL for each chain from env
+      [sepolia.id]: http(process.env.SEPOLIA_RPC_URL!),
     },
 
     // Required API Keys
-    walletConnectProjectId: "f01cf64d877f3cb844fb83114d02d88c",
+    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
 
     // Required App Info
     appName: "Your App Name",
