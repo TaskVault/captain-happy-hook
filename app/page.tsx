@@ -1,8 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { useWriteContract } from "wagmi";
 
 export default function Home() {
+  const { data: hash, writeContract } = useWriteContract();
+
   const [crypto1, setCrypto1] = useState("ETH");
   const [crypto2, setCrypto2] = useState("OTHER");
 
@@ -16,6 +19,17 @@ export default function Home() {
     setCrypto1(crypto2);
     setAmount2(tempAmount);
     setCrypto2(temp);
+  };
+
+  const swap = () => {
+    return true;
+    // TODO
+    // writeContract({
+    //   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    //   abi,
+    //   functionName: 'mint',
+    //   args: [BigInt(tokenId)],
+    // })
   };
 
   return (
@@ -53,7 +67,10 @@ export default function Home() {
             <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto2}</div>
           </div>
         </div>
-        <button className="flex w-full bg-pink-600 hover:bg-pink-700 rounded-2xl justify-center items-center text-xl p-4 mt-2">
+        <button
+          onClick={swap}
+          className="flex w-full bg-pink-600 hover:bg-pink-700 rounded-2xl justify-center items-center text-xl p-4 mt-2"
+        >
           Swap
         </button>
       </div>
