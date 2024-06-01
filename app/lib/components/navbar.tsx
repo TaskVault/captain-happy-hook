@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import { ConnectKitButton } from "connectkit";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -21,22 +22,24 @@ const Navbar = () => {
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
-              <a>Swap</a>
+              <Link href="/swap">Swap</Link>
             </li>
             <li>
-              <a>Manage liquidity</a>
+              <Link href="/liquidity">Manage liquidity</Link>
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Unicorn V4</a>
+        <Link href="/">
+          <div className="btn btn-ghost text-xl">Unicorn V4</div>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a href="/swap">Swap</a>
+            <Link href="/swap">Swap</Link>
           </li>
           <li>
-            <a>Manage liquidity</a>
+            <Link href="/liquidity">Manage liquidity</Link>
           </li>
         </ul>
       </div>
