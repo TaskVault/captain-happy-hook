@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useWriteContract } from "wagmi";
 
 export default function Home() {
-  const { data: hash, writeContract } = useWriteContract();
+  const { writeContract } = useWriteContract();
 
   const [crypto1, setCrypto1] = useState("ETH");
   const [crypto2, setCrypto2] = useState("OTHER");
