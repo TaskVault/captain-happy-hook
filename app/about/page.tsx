@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -12,14 +13,27 @@ export default function Home() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <h2 className="text-6xl font-bold text-center my-16 text-custom-blue">About</h2>
+      <h2 className="text-6xl font-bold text-center mt-16 mb-10 text-custom-blue">About</h2>
       <p className="text-custom-blue text-xl text-center max-w-[700px]">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        With Captain Happy Hook we tried to solve the price impact problem that afflicts every defi user, especially small
+        ones. We created a Uniswap hook for v4 pools that reorders incoming swap transaction in a smart way and guarantees a
+        more fair price for every participant.
       </p>
-      <Image className="rounded-3xl mt-10" src="/hook.webp" width={400} height={400} alt="hook" />
+      <p className="text-custom-blue text-xl text-center max-w-[700px]">
+        See{" "}
+        <Link target="blank" className="text-white underline" href={"https://github.com/blackicon-eth/unicorn-v4-interface"}>
+          our github repo
+        </Link>{" "}
+        for more details!
+      </p>
+      <Link
+        target="blank"
+        href={
+          "https://images.squarespace-cdn.com/content/v1/5e01d4d4c4faa308239ed7b6/1578558330242-F7BAHKSPPM71KZ90TY44/original.gif"
+        }
+      >
+        <Image className="rounded-3xl mt-10" src="/hook.webp" width={400} height={400} alt="hook" />
+      </Link>
     </main>
   );
 }
