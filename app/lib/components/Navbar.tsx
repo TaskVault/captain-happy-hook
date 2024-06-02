@@ -33,7 +33,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link href="/about">
+        <Link href="/">
           <div className="btn btn-ghost text-2xl">Captain Happy Hook</div>
         </Link>
       </div>
