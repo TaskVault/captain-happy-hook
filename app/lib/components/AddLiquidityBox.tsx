@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const AddLiquidityBox = () => {
   return (
-    <div className="bg-custom-blue p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center">
+    <div className="bg-custom-blue p-4 w-[600px] rounded-2xl shadow-md flex flex-col items-center text-white">
       Add liquidity to ETH/OTHER pool
       <div className="flex flex-col w-full bg-custom-light-blue rounded-2xl p-4 mt-3">
         <div className="flex flex-row w-full space-x-14 py-8">
