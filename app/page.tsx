@@ -20,11 +20,19 @@ export default function Home() {
         more fair price for every participant.
       </p>
       <p className="text-custom-blue text-xl text-center max-w-[700px]">
-        See{" "}
-        <Link target="blank" className="text-white underline" href={"https://github.com/blackicon-eth/unicorn-v4-interface"}>
-          our github repo
+        See the{" "}
+        <Link
+          target="blank"
+          className="text-white underline"
+          href={"https://github.com/SolidityDrone/EthPrague---Contracts"}
+        >
+          hook
         </Link>{" "}
-        for more details!
+        and the{" "}
+        <Link target="blank" className="text-white underline" href={"https://github.com/blackicon-eth/captain-happy-hook"}>
+          interface
+        </Link>{" "}
+        github repos for more details!
       </p>
       <Link
         target="blank"
