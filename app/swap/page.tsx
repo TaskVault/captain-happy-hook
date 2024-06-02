@@ -2,53 +2,90 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useWriteContract, useAccount } from "wagmi";
+import { PoolSwapTestAbi } from "../lib/abi/PoolSwapTest";
+import { SwapState } from "../lib/constants/enums";
+import SwapButton from "../lib/components/SwapButton";
+import { Address, parseEther } from "viem";
+import { ERC20Abi } from "../lib/abi/Erc20Abi";
+import { SWAP_ROUTER_ADDRESS, TOKEN_0_ADDRESS, TOKEN_1_ADDRESS } from "../lib/constants/addresses";
 
 export default function Home() {
-  const { isConnecting, isDisconnected } = useAccount();
+  const { isDisconnected } = useAccount();
   const { writeContract } = useWriteContract();
 
-  const [crypto1, setCrypto1] = useState("ETH");
-  const [crypto2, setCrypto2] = useState("OTHER");
+  const [sellingToken, setSellingToken] = useState("TOKEN_0");
 
+  const [token0, setToken0] = useState("TOKEN_0");
+  const [token1, setToken1] = useState("TOKEN_1");
+
+  const [token0Address, setToken0Address] = useState(TOKEN_0_ADDRESS);
+  const [token1Address, setToken1Address] = useState(TOKEN_1_ADDRESS);
+
+  const [amount0, setAmount0] = useState("");
   const [amount1, setAmount1] = useState("");
-  const [amount2, setAmount2] = useState("");
 
-  const switch12 = () => {
-    const temp = crypto1;
-    const tempAmount = amount1;
-    setAmount1(amount2);
-    setCrypto1(crypto2);
-    setAmount2(tempAmount);
-    setCrypto2(temp);
+  const [swapState, setSwapState] = useState(SwapState.ApproveSwapRouter);
+
+  const switch_token = () => {
+    const temp = token0;
+    const tempAmount = amount0;
+    const tempCryptoAddress = token0Address;
+
+    setAmount0(amount1);
+    setToken0(token1);
+    setToken0Address(token1Address);
+
+    setToken1(temp);
+    setAmount1(tempAmount);
+    setToken1Address(tempCryptoAddress);
+
+    setSellingToken(sellingToken === "TOKEN_0" ? "TOKEN_1" : "TOKEN_0");
+  };
+
+  const approveSwapRouter = () => {
+    writeContract({
+      address: sellingToken === "TOKEN_0" ? (token0Address as Address) : (token1Address as Address),
+      abi: ERC20Abi,
+      functionName: "approve",
+      args: [
+        "0x123456789ABCDEF123456789ABCDEF1234567890", // check this
+        sellingToken === "TOKEN_0" ? BigInt(parseEther(amount0)) : BigInt(parseEther(amount1)),
+      ],
+    });
+  };
+
+  const approveHook = () => {
+    writeContract({
+      address: sellingToken === "TOKEN_0" ? (token0Address as Address) : (token1Address as Address),
+      abi: ERC20Abi,
+      functionName: "approve",
+      args: [
+        "0x123456789ABCDEF123456789ABCDEF1234567890", // insert here hook address
+        sellingToken === "TOKEN_0" ? BigInt(parseEther(amount0)) : BigInt(parseEther(amount1)),
+      ],
+    });
   };
 
   const swap = () => {
-    return true;
-    /*
     writeContract({
-       address: '0x841B5A0b3DBc473c8A057E2391014aa4C4751351',
-       abi: [{"inputs":[{"internalType":"contract IPoolManager","name":"_manager","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"NoSwapOccurred","type":"error"},{"inputs":[],"name":"manager","outputs":[{"internalType":"contract IPoolManager","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"components":[{"internalType":"Currency","name":"currency0","type":"address"},{"internalType":"Currency","name":"currency1","type":"address"},{"internalType":"uint24","name":"fee","type":"uint24"},{"internalType":"int24","name":"tickSpacing","type":"int24"},{"internalType":"contract IHooks","name":"hooks","type":"address"}],"internalType":"struct PoolKey","name":"key","type":"tuple"},{"components":[{"internalType":"bool","name":"zeroForOne","type":"bool"},{"internalType":"int256","name":"amountSpecified","type":"int256"},{"internalType":"uint160","name":"sqrtPriceLimitX96","type":"uint160"}],"internalType":"struct IPoolManager.SwapParams","name":"params","type":"tuple"},{"components":[{"internalType":"bool","name":"takeClaims","type":"bool"},{"internalType":"bool","name":"settleUsingBurn","type":"bool"}],"internalType":"struct PoolSwapTest.TestSettings","name":"testSettings","type":"tuple"},{"internalType":"bytes","name":"hookData","type":"bytes"}],"name":"swap","outputs":[{"internalType":"BalanceDelta","name":"delta","type":"int256"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"bytes","name":"rawData","type":"bytes"}],"name":"unlockCallback","outputs":[{"internalType":"bytes","name":"","type":"bytes"}],"stateMutability":"nonpayable","type":"function"}],
-       functionName: 'swap',
-       args: [
-  BigInt("1000000000000000000"), // 1 ether in Wei
-  ["0x123456789ABCDEF123456789ABCDEF1234567890", 42], // Tuple example: [address, uint]
-  "0x123456789ABCDEF123456789ABCDEF1234567890", // currency0 address
-  "0x0987654321FEDCBA0987654321FEDCBA09876543", // currency1 address
-  500, // fee as a uint24
-  -10, // tickSpacing as int24
-  "0xABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE", // hooks address
-  [true, BigInt("500000000000000000"), ["0xABCDEABCDEABCDEABCDEABCDEABCDEABCDEABCDE", 100]], // params tuple: [bool, uint256, [address, uint]]
-  true, // zeroForOne as bool
-  BigInt("-1000000000000000000"), // amountSpecified as int256
-  BigInt("489366168637213703093760231"), // sqrtPriceLimitX96 as uint160
-  [false, "Extra data"], // testSettings tuple: [bool, string]
-  true, // takeClaims as bool
-  false, // settleUsingBurn as bool
-  "0x68656c6c6f20776f726c64" // hookData in bytes (hex for "hello world")
-];
-,
-     })
-     */
+      address: SWAP_ROUTER_ADDRESS as Address,
+      abi: PoolSwapTestAbi,
+      functionName: "swap",
+      args: [
+        {
+          currency0: TOKEN_0_ADDRESS,
+          currency1: TOKEN_1_ADDRESS,
+          fee: 3000,
+          tickSpacing: 60,
+          hooks: TOKEN_1_ADDRESS /*Change this address*/,
+        },
+        {
+          zeroForOne: sellingToken === "TOKEN_0",
+          amountSpecified: sellingToken === "TOKEN_0" ? BigInt(parseEther(amount0)) : BigInt(parseEther(amount1)),
+          sqrtPriceLimitX96: BigInt(parseEther("1234")),
+        },
+      ],
+    });
   };
 
   return (
@@ -70,14 +107,18 @@ export default function Home() {
               className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"
               type="number"
               placeholder="Amount"
-              value={amount1}
-              onChange={(e) => setAmount1(e.target.value)}
+              value={amount0}
+              onChange={(e) => setAmount0(e.target.value)}
             />
-            <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto1}</div>
+            <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{token0}</div>
           </div>
         </div>
         <div className="flex-1 rounded-xl">
-          <button className="relative z-50 btn bg-custom-blue" onClick={switch12}>
+          <button
+            disabled={swapState != SwapState.ApproveSwapRouter}
+            className="relative z-50 btn bg-custom-blue"
+            onClick={switch_token}
+          >
             <Image width={20} height={20} src="/arrows.png" alt="Swap" />
           </button>
         </div>
@@ -88,27 +129,19 @@ export default function Home() {
               className="flex-auto bg-transparent focus:bg-transparent focus:outline-none text-2xl"
               type="number"
               placeholder="Amount"
-              value={amount2}
-              onChange={(e) => setAmount2(e.target.value)}
+              value={amount1}
+              onChange={(e) => setAmount1(e.target.value)}
             />
-            <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{crypto2}</div>
+            <div className="flex bg-pink-600 px-5 py-3 rounded-full items-center justify-center">{token1}</div>
           </div>
         </div>
-        {isConnecting || isDisconnected ? (
-          <button
-            onClick={swap}
-            className="flex w-full bg-slate-600 rounded-2xl justify-center items-center text-xl p-4 mt-2"
-          >
-            Swap
-          </button>
-        ) : (
-          <button
-            onClick={swap}
-            className="flex w-full bg-pink-600 hover:bg-pink-700 rounded-2xl justify-center items-center text-xl p-4 mt-2"
-          >
-            Swap
-          </button>
-        )}
+        <SwapButton
+          isDisconnected={isDisconnected}
+          swapState={swapState}
+          approveSwapRouter={approveSwapRouter}
+          approveHook={approveHook}
+          swap={swap}
+        />
       </div>
     </main>
   );
