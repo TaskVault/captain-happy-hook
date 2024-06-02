@@ -67,25 +67,26 @@ export default function Home() {
   };
 
   const swap = () => {
-    writeContract({
-      address: SWAP_ROUTER_ADDRESS as Address,
-      abi: PoolSwapTestAbi,
-      functionName: "swap",
-      args: [
-        {
-          currency0: TOKEN_0_ADDRESS,
-          currency1: TOKEN_1_ADDRESS,
-          fee: 3000,
-          tickSpacing: 60,
-          hooks: TOKEN_1_ADDRESS /*Change this address*/,
-        },
-        {
-          zeroForOne: sellingToken === "TOKEN_0",
-          amountSpecified: sellingToken === "TOKEN_0" ? BigInt(parseEther(amount0)) : BigInt(parseEther(amount1)),
-          sqrtPriceLimitX96: BigInt(parseEther("1234")),
-        },
-      ],
-    });
+    return true;
+    // writeContract({
+    //   address: SWAP_ROUTER_ADDRESS as Address,
+    //   abi: PoolSwapTestAbi,
+    //   functionName: "swap",
+    //   args: [
+    //     {
+    //       currency0: TOKEN_0_ADDRESS,
+    //       currency1: TOKEN_1_ADDRESS,
+    //       fee: 3000,
+    //       tickSpacing: 60,
+    //       hooks: TOKEN_1_ADDRESS /*Change this address*/,
+    //     },
+    //     {
+    //       zeroForOne: sellingToken === "TOKEN_0",
+    //       amountSpecified: sellingToken === "TOKEN_0" ? BigInt(parseEther(amount0)) : BigInt(parseEther(amount1)),
+    //       sqrtPriceLimitX96: BigInt(parseEther("1234")),
+    //     },
+    //   ],
+    // });
   };
 
   return (
